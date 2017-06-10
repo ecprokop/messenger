@@ -1,0 +1,10 @@
+.incoming {
+    background-color: grey;
+    text-align: left;
+}
+
+.outgoing {
+    background-color: blue;
+    text-align: right;
+    color: white;
+}

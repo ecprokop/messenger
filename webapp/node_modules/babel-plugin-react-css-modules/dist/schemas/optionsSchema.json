@@ -1,0 +1,27 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "context": {
+      "type": "string"
+    },
+    "filetypes": {
+      "patternProperties": {
+        "\\..*": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "generateScopedName": {
+      "type": "string"
+    },
+    "webpackHotModuleReloading": {
+      "type": "boolean"
+    },
+    "exclude": {
+      "type": "string"
+    }
+  },
+  "type": "object"
+}
