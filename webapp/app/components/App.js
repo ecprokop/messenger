@@ -27,21 +27,32 @@ class App extends React.Component {
     this.socket.on('message', (fromUser, content) => {
       console.log('received message', content);
       this.props.receiveMessage(fromUser, content);
+      this.props.incrementUnread(fromUser, this.props.activeUser);
     });
   }
 
+  getActiveMessages() {
+    if (!this.props.activeUser) return undefined;
+    if (!this.props.exchanges[this.props.activeUser]) return [];
+    return this.props.exchanges[this.props.activeUser].history;
+  }
+
+  onUserSelect(user) {
+    this.props.startChat(user);
+    this.props.resetUnread(user);
+  }
+
   render() {
-    const activeMessages = this.props.activeUser ? 
-                           (this.props.messages[this.props.activeUser] || []) :
-                           undefined;
+    const activeMessages = this.getActiveMessages();
 
     if (!this.socket) return <p>Loading...</p>;
     return (
       <div>
         <UsersList 
-          users={this.props.users} 
+          users={this.props.users}
+          exchanges={this.props.exchanges}
           currentUser={this.socket.id} 
-          onUserSelect={this.props.startChat} />
+          onUserSelect={this.onUserSelect.bind(this)} />
         <MessageInput socket={this.socket} />
         <MessageList 
           messages={activeMessages} />
@@ -54,7 +65,7 @@ function mapStateToProps(state) {
   return {
     users: state.users.onlineUsers,
     activeUser: state.users.activeUser,
-    messages: state.messages
+    exchanges: state.exchanges
   };
 }
 

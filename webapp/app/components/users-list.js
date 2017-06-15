@@ -15,12 +15,17 @@ export default class UsersList extends Component {
         }
         
         const lis = this.props.users.map((user) => {
+            const unread = this.props.exchanges[user] && this.props.exchanges[user].unread ? 
+                            this.props.exchanges[user].unread :
+                            ''; 
+
             if (user === this.props.currentUser) {
                 return '';
             } else {
                 return <li key={user}>
                             {user}
                             <button onClick={() => this.props.onUserSelect(user)}>Message</button>
+                            {unread}
                         </li>;
             }
         });

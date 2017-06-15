@@ -2,6 +2,8 @@ import { UPDATE_USERS } from './types';
 import { SEND_MESSAGE } from './types';
 import { RECEIVE_MESSAGE } from './types';
 import { START_CHAT } from './types';
+import { INCREMENT_UNREAD } from './types';
+import { RESET_UNREAD } from './types';
 
 export function updateUsers(users) {
     return {
@@ -38,6 +40,25 @@ export function receiveMessage(fromUser, content) {
         payload: {
             user: fromUser,
             content,
+        },
+    };
+}
+
+export function incrementUnread(fromUser, activeUser) {
+    return {
+        type: INCREMENT_UNREAD,
+        payload: {
+            user: fromUser,
+            activeUser,
+        },
+    };
+}
+
+export function resetUnread(user) {
+    return {
+        type: RESET_UNREAD,
+        payload: {
+            user,
         },
     };
 }
